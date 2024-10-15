@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./pages/headerfiles") %>
+    <title>Admin Panel</title>
+    <style>
+      .error {
+        color: red;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="wrapper">
+      <div class="container">
+        <div class="row">
+          <div id="content-wrapper" class="col-12">
+            <section id="main">
+              <div class="login-page">
+                <div class="block-title">
+                  <h2 class="title"><span>Admin Login</span></h2>
+                </div>
+
+                <form id="adminForm">
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <label for="email" class="form-label"
+                        >Enter your Email:</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <label for="password" class="form-label"
+                        >Enter your Password:</label
+                      >
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        onclick="login()"
+                      >
+                        Login
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-sm-12">
+                      <a href="/admin/forgotPassword">Forgot Password?</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%- include("./pages/scriptfiles") %>
+    <script>
+      let login = () => {
+        $("#adminForm").validate();
+        if ($("#adminForm").valid()) {
+          let email = document.getElementById("email").value;
+          let password = document.getElementById("password").value;
+          console.log(email);
+          console.log(password);
+          let form = document.getElementById("adminForm");
+          let fd = new FormData(form);
+
+          fetch("/admin/info", { method: "POST", body: fd })
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.error) {
+                swal.fire({
+                  title: "Error",
+                  text: res.message,
+                  icon: "error",
+                });
+              } else {
+                alert(res.message);
+                console.log(res.token);
+                window.location.href = "/admin/dashboard";
+              }
+            })
+            .catch((error) => {
+              swal.fire({
+                title: "Error",
+                text: "Something went wrong!",
+                icon: "error",
+              });
+              console.error("Error:", error);
+            });
+        }
+      };
+    </script>
+  </body>
+</html>

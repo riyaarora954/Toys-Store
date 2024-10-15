@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles.ejs")%>
+
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles.ejs")%>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+  <body id="product" onload="viewProduct()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <% if (loggedIn) { %> <%- include('./pages/userNavbar.ejs') %> <% } else {
+      %> <%- include('./pages/header.ejs') %> <% } %>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- ------------------breadcrumb-------------->
+      <div class="breadcrumb-container">
+        <nav data-depth="5" class="breadcrumb container">
+          <h1
+            class="h1 product-title breadcrumb-title"
+            id="breadcrumbname"
+          ></h1>
+          <ol>
+            <li>
+              <a href="#">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>Products</span>
+              </a>
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <!-- ---------------section-------------------- -->
+      <section id="wrapper">
+        <div class="container">
+          <div class="row">
+            <div id="content-wrapper" class="col-12">
+              <section id="main">
+                <div class="row">
+                  <div class="col-md-6">
+                    <section class="page-content" id="content">
+                      <ul class="product-flags">
+                        <li class="product-flag new">New</li>
+                      </ul>
+                      <div class="images-container">
+                        <div class="product-cover">
+                          <div id="product-zoom">
+                            <div id="imageofproduct"></div>
+                          </div>
+                        </div>
+                        <div id="smallimageofproduct"></div>
+                      </div>
+                      <div class="scroll-box-arrows">
+                        <i class="material-icons left">&#xE314;</i>
+                        <i class="material-icons right">&#xE315;</i>
+                      </div>
+                    </section>
+                  </div>
+                  <div class="col-md-6 productfullldetails">
+                    <h1 class="h1 product-title" id="product-name"></h1>
+                    <div class="product-information">
+                      <div id="product-description-short-1">
+                        <p id="description"></p>
+                      </div>
+                      <div class="product-comments display_comments">
+                        <div class="star_content">
+                          <div class="star star_on"></div>
+                          <div class="star star_on"></div>
+                          <div class="star star_on"></div>
+                          <div class="star star_on"></div>
+                          <div class="star star_on"></div>
+                        </div>
+                        <div class="comment_advice">
+                          <a href="#tab-review" class="read_comment scrollLink"
+                            ><i
+                              class="material-icons comments"
+                              aria-hidden="true"
+                              ></i
+                            >Read Reviews</a
+                          >
+                          <a href="#tab-review" class="write_comment scrollLink"
+                            ><i
+                              class="material-icons comments"
+                              aria-hidden="true"
+                              ></i
+                            >Write Review</a
+                          >
+                        </div>
+                        <span>5 review</span>
+                      </div>
+                      <div class="product-actions">
+                        <form
+                          action="#"
+                          method="post"
+                          id="add-to-cart-or-refresh"
+                        >
+                          <input
+                            type="hidden"
+                            name="token"
+                            value="3d2187fdc78a54510e1e1670c3ff42b0"
+                          />
+                          <input
+                            type="hidden"
+                            name="id_product"
+                            value="1"
+                            id="product_page_product_id"
+                          />
+                          <input
+                            type="hidden"
+                            name="id_customization"
+                            value="0"
+                            id="product_customization_id"
+                          />
+
+                          <section class="product-discounts"></section>
+                          <div class="product-prices">
+                            <div class="product-price h5">
+                              <link href="#" />
+                              <meta itemprop="priceCurrency" content="USD" />
+                              <div class="current-price">
+                                <span itemprop="price" id="price"></span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="product-add-to-cart">
+                            <div
+                              class="product-quantity-selector form-control-select"
+                            >
+                              <p>Quantity</p>
+                              <div class="quantity-counter">
+                                <i class="fa fa-caret-left dec button qtyminus"
+                                  ><span>-</span></i
+                                >
+                                <input
+                                  name="quantity"
+                                  value="1"
+                                  class="quantity"
+                                />
+                                <i class="fa fa-caret-right inc button qtyplus"
+                                  ><span>+</span></i
+                                >
+                              </div>
+                            </div>
+                            <div class="product-quantity clearfix">
+                              <div class="add">
+                                <button
+                                  class="btn btn-primary add-to-cart"
+                                  data-button-action="add-to-cart"
+                                  type="button"
+                                  onclick="AddToCart()"
+                                >
+                                  <i class="material-icons shopping-cart"
+                                    >&#xE547;</i
+                                  >
+                                  Add to cart
+                                </button>
+                              </div>
+                              <div
+                                class="buttons_bottom_block no-print wishlist_login"
+                              >
+                                <a
+                                  class="wishlist_button"
+                                  href="#"
+                                  title="Add to my wishlist"
+                                >
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    style="display: none"
+                                  >
+                                    <symbol
+                                      id="wishlist-outline"
+                                      viewBox="0 0 1200 1200"
+                                    >
+                                      <title>wishlist-outline</title>
+                                      <path
+                                        d="M511.825,170.191c-0.14-1.786-0.298-3.155-0.44-4.095C504.22,84.955,444.691,20.73,367.434,20.73
+                                        c-44.758,0-85.66,21.18-112.442,55.516C228.835,41.679,189.491,20.73,144.97,20.73C67.976,20.73,8.584,84.52,0.937,166.557
+                                        c-0.147,0.956-0.295,2.12-0.43,3.489C-0.8,183.3,0.287,200.862,5.338,222.26c10.732,45.463,35.828,86.871,71.224,118.958
+                                        l164.828,144.92c8.028,7.059,20.042,7.085,28.101,0.062l166.037-144.683c39.134-40.728,62.393-77.366,71.616-119.584
+                                        C511.771,200.731,512.848,183.284,511.825,170.191z M465.46,212.833c-7.254,33.204-26.552,63.603-59.352,97.843L255.545,441.771
+                                        l-150.569-132.38c-28.881-26.184-49.406-60.051-58.113-96.933c-3.953-16.747-4.747-29.585-3.895-38.225
+                                        c0.075-0.764,0.393-3.072,0.393-3.072C48.849,109.384,91.478,63.397,144.97,63.397c39.823,0,73.704,24.287,90.17,63.294
+                                        c7.338,17.382,31.97,17.382,39.308,0c16.136-38.225,52.419-63.294,92.986-63.294c53.494,0,96.121,45.99,101.609,107.786
+                                        c0.147,1.242,0.187,1.586,0.245,2.333C469.993,182.541,469.174,195.811,465.46,212.833z"
+                                      ></path>
+                                    </symbol>
+                                  </svg>
+                                  <svg
+                                    class="icon"
+                                    onclick="addToWishlist()"
+                                    viewBox="0 0 30 30"
+                                  >
+                                    <use
+                                      xlink:href="#wishlist-outline"
+                                      x="29%"
+                                      y="30%"
+                                    ></use>
+                                  </svg>
+                                  <span>Add to wishlist</span>
+                                </a>
+                              </div>
+                              <div id="product-availability">
+                                <i class="material-icons product-available"
+                                  >&#xE5CA;</i
+                                >
+                                In stock
+                              </div>
+                            </div>
+                          </div>
+                          <div class="product-additional-info">
+                            <div class="social-sharing">
+                              <span>Share</span>
+                              <ul>
+                                <li class="facebook icon-gray">
+                                  <a
+                                    href="#"
+                                    class="text-hide"
+                                    title="Share"
+                                    target="_blank"
+                                    >Share</a
+                                  >
+                                </li>
+                                <li class="twitter icon-gray">
+                                  <a
+                                    href="#"
+                                    class="text-hide"
+                                    title="Tweet"
+                                    target="_blank"
+                                    >Tweet</a
+                                  >
+                                </li>
+                                <li class="googleplus icon-gray">
+                                  <a
+                                    href="#"
+                                    class="text-hide"
+                                    title="Google+"
+                                    target="_blank"
+                                    >Google+</a
+                                  >
+                                </li>
+                                <li class="pinterest icon-gray">
+                                  <a
+                                    href="#"
+                                    class="text-hide"
+                                    title="Pinterest"
+                                    target="_blank"
+                                    >Pinterest</a
+                                  >
+                                </li>
+                              </ul>
+                            </div>
+                            <div
+                              class="col-xl-12 col-lg-12 col-md-12 paymentlogo-container"
+                            >
+                              <span>Payment</span>
+                              <img
+                                src="/assets/images/paymenticon/1.png"
+                                alt="Discover"
+                              />
+                              <img
+                                src="/assets/images/paymenticon/2.png"
+                                alt="Visa"
+                              />
+                              <img
+                                src="/assets/images/paymenticon/3.png"
+                                alt="JCB"
+                              />
+                              <img
+                                src="/assets/images/paymenticon/4.png"
+                                alt="PayPal"
+                              />
+                              <img
+                                src="/assets/images/paymenticon/5.png"
+                                alt="Master Card"
+                              />
+                              <img
+                                src="/assets/images/paymenticon/6.png"
+                                alt="American Express"
+                              />
+                            </div>
+                          </div>
+                          <div id="block-reassurance">
+                            <ul>
+                              <li>
+                                <div class="block-reassurance-item">
+                                  <img
+                                    src="/assets/images/block-reassurance/1.png"
+                                    alt="Security policy (edit with Customer reassurance module)"
+                                  />
+                                  <span class="h6"
+                                    >Security policy (edit with Customer
+                                    reassurance module)</span
+                                  >
+                                </div>
+                              </li>
+                              <li>
+                                <div class="block-reassurance-item">
+                                  <img
+                                    src="/assets/images/block-reassurance/2.png"
+                                    alt="Delivery policy (edit with Customer reassurance module)"
+                                  />
+                                  <span class="h6"
+                                    >Delivery policy (edit with Customer
+                                    reassurance module)</span
+                                  >
+                                </div>
+                              </li>
+                              <li>
+                                <div class="block-reassurance-item">
+                                  <img
+                                    src="/assets/images/block-reassurance/3.png"
+                                    alt="Return policy (edit with Customer reassurance module)"
+                                  />
+                                  <span class="h6"
+                                    >Return policy (edit with Customer
+                                    reassurance module)</span
+                                  >
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row product-block-information">
+                  <div class="col-12 product-details">
+                    <div class="tabs">
+                      <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item active">
+                          <a
+                            class="nav-link"
+                            data-toggle="tab"
+                            href="#description"
+                            role="tab"
+                            aria-controls="description"
+                            aria-selected="true"
+                            >Description</a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            data-toggle="tab"
+                            href="#product-details"
+                            role="tab"
+                            aria-controls="product-details"
+                            >Product Details</a
+                          >
+                        </li>
+                        <li class="nav-item">
+                          <a
+                            class="nav-link"
+                            data-toggle="tab"
+                            href="#tab-review"
+                            role="tab"
+                            aria-controls="product-details"
+                            >reviews</a
+                          >
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="tab-content">
+                        <div
+                          class="tab-pane fade show active"
+                          id="description"
+                          role="tabpanel"
+                        >
+                          <div class="product-description">
+                            <p>
+                              Our selection of toys offers a delightful mix of
+                              fun and educational value, designed to inspire and
+                              engage children of all ages. From colorful
+                              building blocks that encourage creativity and
+                              problem-solving skills to interactive electronic
+                              toys that introduce basic programming concepts,
+                              our collection caters to a wide range of interests
+                              and developmental stages.
+                            </p>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="product-details"
+                          role="tabpanel"
+                        >
+                          <div class="product-manufacturer">
+                            <a href="#">
+                              <img
+                                src="/assets/images/product-brandlogo.png"
+                                class="img img-thumbnail manufacturer-logo"
+                                alt="Fashion Manufacturer 1"
+                              />
+                            </a>
+                          </div>
+                          <div class="product-reference">
+                            <label class="label">Reference </label>
+                            <span itemprop="sku">demo_1</span>
+                          </div>
+                          <div class="product-quantities">
+                            <label class="label">In stock</label>
+                            <span data-stock="294" data-allow-oosp="0"
+                              >294 Items</span
+                            >
+                          </div>
+                          <div class="product-out-of-stock"></div>
+                          <section class="product-features">
+                            <h3 class="h6">Data sheet</h3>
+                            <dl class="data-sheet">
+                              <dt class="name">Compositions</dt>
+                              <dd class="value">Cotton</dd>
+                              <dt class="name">Styles</dt>
+                              <dd class="value">Casual</dd>
+                              <dt class="name">Properties</dt>
+                              <dd class="value">Short Sleeve</dd>
+                            </dl>
+                          </section>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="tab-review"
+                          role="tabpanel"
+                        >
+                          <form class="form-horizontal" id="form-review">
+                            <div id="review">
+                              <p>There are no reviews for this product.</p>
+                            </div>
+                            <h2>Write a review</h2>
+                            <div class="form-group required">
+                              <div class="col-sm-12">
+                                <input
+                                  name="name"
+                                  value=""
+                                  id="input-name"
+                                  class="form-control"
+                                  type="text"
+                                  placeholder="Your Name"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group required">
+                              <div class="col-sm-12">
+                                <textarea
+                                  name="text"
+                                  rows="5"
+                                  id="input-review"
+                                  class="form-control"
+                                  placeholder="Your Review"
+                                ></textarea>
+                                <div class="help-block">
+                                  HTML is not translated!
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group required">
+                              <div class="col-sm-12">
+                                <label class="control-label">Rating</label>
+                                <span class="custom-radio">
+                                  <input name="rating" value="1" type="radio" />
+                                  <span></span>
+                                </span>
+                                <span class="custom-radio">
+                                  <input name="rating" value="2" type="radio" />
+                                  <span></span>
+                                </span>
+                                <span class="custom-radio">
+                                  <input name="rating" value="3" type="radio" />
+                                  <span></span>
+                                </span>
+                                <span class="custom-radio">
+                                  <input name="rating" value="4" type="radio" />
+                                  <span></span>
+                                </span>
+                                <span class="custom-radio">
+                                  <input name="rating" value="5" type="radio" />
+                                  <span></span>
+                                </span>
+                              </div>
+                            </div>
+                            <div class="buttons clearfix">
+                              <div class="pull-right">
+                                <button
+                                  type="button"
+                                  id="button-review"
+                                  data-loading-text="Loading..."
+                                  class="btn btn-primary"
+                                >
+                                  Continue
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div id="_mobile_left_column" class="row"></div>
+        <div id="_mobile_right_column" class="row"></div>
+        <div class="clearfix"></div>
+      </div>
+      <!-- -----------------footer-------------------- -->
+      <%-include("./pages/footer.ejs")%>
+    </main>
+    <script>
+      async function AddToCart() {
+        let url = "/user/check-user-logged-in";
+        let response = await fetch(url);
+        response = await response.json();
+        console.log(response);
+        if (!response.loggedIn) {
+          window.location.href = "/user/login";
+        } else {
+          let url = `/user/myCartData/<%=id%>`;
+          let response = await fetch(url, {
+            headers: { "Content-Type": "application/json" },
+          });
+          response = await response.json();
+          console.log(response);
+          if (response.error == true) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              timer: 3000,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Item added to Cart",
+              timer: 3000,
+            });
+          }
+        }
+        // window.location.href = "/user/myCart";
+      }
+      async function addToWishlist() {
+        let url = "/user/check-user-logged-in";
+        let response = await fetch(url);
+        response = await response.json();
+        console.log(response);
+        if (!response.loggedIn) {
+          window.location.href = "/user/login";
+        } else {
+          let url = `/user/myWishlistData/<%=id%>`;
+          let response = await fetch(url, {
+            headers: { "Content-Type": "application/json" },
+          });
+          response = await response.json();
+          console.log(response);
+          if (response.error == true) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              timer: 3000,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Item added to Wishlist",
+              timer: 3000,
+            });
+          }
+        }
+        // window.location.href = "/user/myCart";
+      }
+      let viewProduct = () => {
+        fetch(`/product/<%=id%>`)
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.error === false) {
+              console.log(res.data);
+              let categoryname = res.data[0].category_name;
+              document.getElementById(
+                "breadcrumbname"
+              ).innerHTML = `${categoryname}`;
+              let productname = res.data[0].name;
+              document.getElementById(
+                "product-name"
+              ).innerHTML = `${productname}`;
+              let des = res.data[0].description;
+              document.getElementById("description").innerHTML = `${des}`;
+              let price = res.data[0].net_price;
+              document.getElementById("price").innerHTML = `₹ ${price}`;
+              let photo = res.data[0].photo;
+              document.getElementById("imageofproduct").innerHTML = `<img
+                              class="js-qv-product-cover"
+                              src=${res.data[0].photo}
+                              alt="product-image"
+                              title="product-image"
+                              style="width: 100%"
+                            />`;
+            }
+          });
+      };
+    </script>
+  </body>
+</html>

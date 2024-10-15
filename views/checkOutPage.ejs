@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles.ejs")%>
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles.ejs")%>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+  <body id="checkout" onload="viewCheckOutItems()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <%- include("./pages/userNavbar.ejs") %>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------Breadcrumb------------ -->
+      <div class="breadcrumb-container">
+        <nav data-depth="2" class="breadcrumb container">
+          <h1 class="h1 category-title breadcrumb-title">Checkout</h1>
+          <ul>
+            <li>
+              <a href="/">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="/checkOut">
+                <span>Checkout</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- -----------Checkout page----------- -->
+      <section id="wrapper" class="top-wrapper">
+        <div class="container">
+          <section id="content">
+            <div class="row">
+              <div class="col-lg-8 col-sm-12">
+                <div class="accordion" id="accordionExample">
+                  <section
+                    class="checkout-step card"
+                    id="checkout-addresses-step"
+                  >
+                    <div id="user-id" data-user-id="<%= user_id %>"></div>
+                    <form id="userForm">
+                      <h1 class="step-title h3">Addresses</h1>
+                      <p>
+                        The selected address will be used both as your personal
+                        address (for invoice) and as your delivery address.
+                      </p>
+                      <section class="form-fields">
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >First name</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <input
+                              class="form-control"
+                              id="firname"
+                              name="firstname"
+                              required
+                              type="text"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >Last name</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <input
+                              class="form-control"
+                              id="lasname"
+                              name="lastname"
+                              required
+                              type="text"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >Phone</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <input
+                              class="form-control"
+                              id="phone"
+                              name="phone"
+                              required
+                              type="tel"
+                              readonly
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >Address</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <input
+                              class="form-control"
+                              name="address1"
+                              id="address"
+                              value=""
+                              required
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >City</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <input
+                              class="form-control"
+                              name="city"
+                              id="city"
+                              value=""
+                              required
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >State</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <select
+                              class="form-control form-control-select"
+                              name="id_state"
+                              id="state"
+                              required
+                            >
+                              <option value="" disabled selected>
+                                -- please choose --
+                              </option>
+                              <option value="Andaman and Nicobar Islands">
+                                Andaman and Nicobar Islands
+                              </option>
+                              <option value="Andhra Pradesh">
+                                Andhra Pradesh
+                              </option>
+                              <option value="Arunachal Pradesh">
+                                Arunachal Pradesh
+                              </option>
+                              <option value="Assam">Assam</option>
+                              <option value="Bihar">Bihar</option>
+                              <option value="Chandigarh">Chandigarh</option>
+                              <option value="Chhattisgarh">Chhattisgarh</option>
+                              <option
+                                value="Dadra and Nagar Haveli and Daman and Diu"
+                              >
+                                Dadra and Nagar Haveli and Daman and Diu
+                              </option>
+                              <option value="Delhi">Delhi</option>
+                              <option value="Goa">Goa</option>
+                              <option value="Gujarat">Gujarat</option>
+                              <option value="Haryana">Haryana</option>
+                              <option value="Himachal Pradesh">
+                                Himachal Pradesh
+                              </option>
+                              <option value="Jammu and Kashmir">
+                                Jammu and Kashmir
+                              </option>
+                              <option value="Jharkhand">Jharkhand</option>
+                              <option value="Karnataka">Karnataka</option>
+                              <option value="Kerala">Kerala</option>
+                              <option value="Ladakh">Ladakh</option>
+                              <option value="Lakshadweep">Lakshadweep</option>
+                              <option value="Madhya Pradesh">
+                                Madhya Pradesh
+                              </option>
+                              <option value="Maharashtra">Maharashtra</option>
+                              <option value="Manipur">Manipur</option>
+                              <option value="Meghalaya">Meghalaya</option>
+                              <option value="Mizoram">Mizoram</option>
+                              <option value="Nagaland">Nagaland</option>
+                              <option value="Odisha">Odisha</option>
+                              <option value="Puducherry">Puducherry</option>
+                              <option value="Punjab">Punjab</option>
+                              <option value="Rajasthan">Rajasthan</option>
+                              <option value="Sikkim">Sikkim</option>
+                              <option value="Tamil Nadu">Tamil Nadu</option>
+                              <option value="Telangana">Telangana</option>
+                              <option value="Tripura">Tripura</option>
+                              <option value="Uttar Pradesh">
+                                Uttar Pradesh
+                              </option>
+                              <option value="Uttarakhand">Uttarakhand</option>
+                              <option value="West Bengal">West Bengal</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label
+                            class="col-md-3 col-sm-12 form-control-label required"
+                            >Zip/Postal Code</label
+                          >
+                          <div class="col-md-6 col-sm-12">
+                            <input
+                              class="form-control"
+                              name="postcode"
+                              value=""
+                              required
+                              id="pincode"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <h1 class="step-title h3">Payment</h1>
+                          <div class="payment-options">
+                            <div class="payment-option clearfix">
+                              <span class="custom-radio float-xs-left">
+                                <input
+                                  class="ps-shown-by-js"
+                                  name="payment"
+                                  value="cod"
+                                  required
+                                  type="radio"
+                                />
+                                <span></span>
+                              </span>
+                              <label><span>Cash On Delivery</span></label>
+                            </div>
+                            <div class="payment-option clearfix">
+                              <span class="custom-radio float-xs-left">
+                                <input
+                                  class="ps-shown-by-js"
+                                  name="payment"
+                                  value="pay-online"
+                                  required
+                                  type="radio"
+                                />
+                                <span></span>
+                              </span>
+                              <label><span>Pay Online</span></label>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          class="btn btn-primary center-block"
+                          onclick="Booking()"
+                        >
+                          Order with an obligation to pay
+                        </button>
+                      </section>
+                    </form>
+                  </section>
+                </div>
+              </div>
+              <div class="col-lg-4 col-sm-12">
+                <section id="js-checkout-summary" class="card js-cart">
+                  <div class="card-block-summary-details">
+                    <div class="cart-summary-products">
+                      <div id="cart-summary-product-list">
+                        <ul class="media-list">
+                          <div id="cartItems"></div>
+                        </ul>
+                      </div>
+                    </div>
+                    <div
+                      class="cart-summary-line cart-summary-subtotals"
+                      id="cart-subtotal-products"
+                    >
+                      <span class="label">Subtotal</span>
+                      <span class="value" id="subTotal"></span>
+                    </div>
+                    <div
+                      class="cart-summary-line cart-summary-subtotals"
+                      id="cart-subtotal-shipping"
+                    >
+                      <span class="label">Shipping</span>
+                      <span class="value">$7.00</span>
+                    </div>
+                  </div>
+                  <hr class="separator" />
+                  <div class="cart-summary-totals">
+                    <div class="cart-summary-line cart-total">
+                      <span class="label">Total (tax excl.)</span>
+                      <span class="value" id="grandTotal"></span>
+                    </div>
+                    <div class="cart-summary-line">
+                      <span class="label sub">Taxes</span>
+                      <span class="value sub">$0.00</span>
+                    </div>
+                  </div>
+                </section>
+                <div id="block-reassurance" class="block-reassurance-cart">
+                  <ul>
+                    <li>
+                      <div class="block-reassurance-item">
+                        <img
+                          src="assets/images/block-reassurance/1.png"
+                          alt="Security policy (edit with Customer reassurance module)"
+                        />
+                        <span class="h6"
+                          >Security policy (edit with Customer reassurance
+                          module)</span
+                        >
+                      </div>
+                    </li>
+                    <li>
+                      <div class="block-reassurance-item">
+                        <img
+                          src="/assets/images/block-reassurance/2.png"
+                          alt="Delivery policy (edit with Customer reassurance module)"
+                        />
+                        <span class="h6"
+                          >Delivery policy (edit with Customer reassurance
+                          module)</span
+                        >
+                      </div>
+                    </li>
+                    <li>
+                      <div class="block-reassurance-item">
+                        <img
+                          src="/assets/images/block-reassurance/3.png"
+                          alt="Return policy (edit with Customer reassurance module)"
+                        />
+                        <span class="h6"
+                          >Return policy (edit with Customer reassurance
+                          module)</span
+                        >
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+      <!-- ------------footer------------ -->
+      <%- include("./pages/footer.ejs") %>
+    </main>
+
+    <script>
+      const formatDateToMySQL = (date) => {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, "0"); // Month is 0-based
+        const dd = String(date.getDate()).padStart(2, "0");
+        const hh = String(date.getHours()).padStart(2, "0");
+        const min = String(date.getMinutes()).padStart(2, "0");
+        const ss = String(date.getSeconds()).padStart(2, "0");
+
+        return `${yyyy}-${mm}-${dd} ${hh}:${min}:${ss}`;
+      };
+
+      // Define currentDate in MySQL DATETIME format
+      const currentDate = formatDateToMySQL(new Date());
+
+      // Get user_id from the div data attribute
+      const userId = document
+        .getElementById("user-id")
+        .getAttribute("data-user-id");
+
+      let viewCheckOutItems = () => {
+        fetch("/user/checkOutItems")
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            if (res.error == false) {
+              let ans = ``;
+              let totalPrice = 0; // Initialize total price
+
+              for (let i = 0; i < res.data.length; i++) {
+                let x = res.data[i];
+                let itemTotal = x.net_price * x.quantity; // Calculate item total
+
+                // Add item HTML
+                ans += `<li class="media">
+                    <div class="media-left">
+                      <a href="#" title="${x.name}">
+                        <img
+                          src="${x.photo}"
+                          alt="${x.name}"
+                        />
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <span class="product-name">${x.name}</span>
+                      <span class="product-quantity">x${x.quantity}</span>
+                      <span class="product-price float-xs-right">$${itemTotal.toFixed(
+                        2
+                      )}</span>
+                    </div>
+                  </li>`;
+
+                // Add item total to totalPrice
+                totalPrice += itemTotal;
+              }
+
+              // Update the subtotal span with the total price
+              document.getElementById(
+                "subTotal"
+              ).innerText = `$${totalPrice.toFixed(2)}`;
+
+              // Append items list to the cartItems element
+              document.getElementById("cartItems").innerHTML = ans;
+              document.getElementById("grandTotal").innerText = `${(
+                totalPrice + 7
+              ).toFixed(2)}`;
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching checkout items:", error);
+          });
+        viewUserDetails();
+      };
+
+      // Call viewCheckOutItems when the DOM is fully loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        viewCheckOutItems();
+      });
+      let viewUserDetails = () => {
+        fetch("/user/userDetails")
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res.data);
+            if (res.error === false) {
+              console.log("Fetched records:", res.data);
+
+              document.getElementById("firname").value = res.data.firstName;
+
+              document.getElementById("lasname").value = res.data.lastName;
+              document.getElementById("address").value = res.data.address;
+              document.getElementById("phone").value = res.data.phone;
+              document.getElementById("pincode").value = res.data.pincode;
+            } else {
+              console.log("There is an error");
+            }
+          });
+      };
+
+      async function Booking() {
+        if ($("#userForm").valid()) {
+          let firstname = document.getElementById("firname").value;
+          let lastname = document.getElementById("lasname").value;
+          let phone = document.getElementById("phone").value;
+          let city = document.getElementById("city").value;
+          let state = document.getElementById("state").value;
+          let address = document.getElementById("address").value;
+          let payment = document.querySelector(
+            'input[name="payment"]:checked'
+          ).value;
+          let pincode = document.getElementById("pincode").value;
+          let amount = document.getElementById("grandTotal").innerText;
+
+          if (payment === "cod") {
+            console.log("COD selected");
+            let url = "/user/booking";
+            let response = await fetch(url, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                firstname: firstname,
+                lastname: lastname,
+                phone: phone,
+                address: address,
+                city: city,
+                state: state,
+                payment: payment,
+                pincode: pincode,
+                user_id: userId,
+                total: amount,
+                date_time: currentDate,
+                payment_status: null,
+                payment_date: null,
+              }),
+            });
+            response = await response.json();
+            console.log(response);
+            if (response.error !== "") {
+              Swal.fire({
+                icon: "error",
+                title: response.error,
+                showConfirmButton: false,
+                timer: 3000,
+              });
+            } else {
+              Swal.fire({
+                icon: "success",
+                title: response.message,
+                showConfirmButton: false,
+                timer: 3000,
+              });
+              document.getElementById("userForm").reset();
+              setTimeout(
+                () => (window.location.href = "/user/orderDetails"),
+                3003
+              );
+            }
+          } else {
+            Online();
+          }
+        }
+      }
+
+      const Online = () => {
+        let amount = document.getElementById("grandTotal").innerText;
+        console.log(amount);
+
+        let options = {
+          key: "rzp_test_dRWiKHS7zr2Gki",
+          amount: amount * 100,
+          name: "Online Art Gallery",
+          description: "Payment Gateway",
+          image:
+            "https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg",
+          handler: function (response) {
+            RazorPayResponse(response);
+          },
+          prefill: {
+            name: "",
+            email: "",
+          },
+          notes: {
+            address: "",
+          },
+          theme: {
+            color: "#942436",
+          },
+        };
+
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+      };
+
+      const RazorPayResponse = async (response) => {
+        if (response.razorpay_payment_id !== "") {
+          console.log(response.razorpay_payment_id);
+          let firstname = document.getElementById("firname").value;
+          let lastname = document.getElementById("lasname").value;
+          let phone = document.getElementById("phone").value;
+          let city = document.getElementById("city").value;
+          let state = document.getElementById("state").value;
+          let address = document.getElementById("address").value;
+          let payment = document.querySelector(
+            'input[name="payment"]:checked'
+          ).value;
+          let pincode = document.getElementById("pincode").value;
+          let amount = document.getElementById("grandTotal").innerText;
+          let status = "Paid";
+          console.log(payment);
+          let url = "/user/booking";
+          let response1 = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              firstname: firstname,
+              lastname: lastname,
+              city: city,
+              state: state,
+              phone: phone,
+              address: address,
+              payment: payment,
+              pincode: pincode,
+              user_id: userId,
+              total: amount,
+              date_time: currentDate,
+              payment_status: status,
+              payment_date: currentDate,
+            }),
+          });
+          response1 = await response1.json();
+          if (response1.error !== "") {
+            Swal.fire({
+              icon: "error",
+              title: response1.error,
+              showConfirmButton: false,
+              timer: 3000,
+            });
+            console.log(response1.error);
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: response1.message,
+              showConfirmButton: false,
+              timer: 3000,
+            });
+            document.getElementById("userForm").reset();
+            setTimeout(
+              () => (window.location.href = "/user/orderDetails"),
+              3003
+            );
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

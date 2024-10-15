@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles.ejs")%>
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles.ejs")%>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+    <style>
+      /* Default styles for products */
+      .product-thumb {
+        padding: 10px;
+      }
+
+      .product-desc {
+        text-align: center;
+      }
+
+      .product-title a {
+        font-size: 1.2em;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .image img {
+        width: 100%;
+        height: auto;
+      }
+
+      .caption {
+        margin-top: 10px;
+      }
+
+      .description {
+        font-size: 0.9em;
+      }
+
+      .price {
+        font-size: 1.1em;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 1200px) {
+        .product-thumb {
+          flex: 0 0 20%;
+        }
+      }
+
+      @media (max-width: 1000px) {
+        .product-thumb {
+          flex: 0 0 25%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .product-thumb {
+          flex: 0 0 33.33%;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .product-thumb {
+          flex: 0 0 50%;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .product-thumb {
+          flex: 0 0 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body id="index" onload="viewCategories()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <%-include("./pages/userNavbar.ejs")%>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------hometop------------ -->
+      <div id="top_home">
+        <!-- -------------------slider----------- -->
+        <section id="ishislider" class="ishislider-container owl-carousel">
+          <div class="item">
+            <a href="#">
+              <img
+                src="assets/images/slider/slide-1.png"
+                alt="Slide-1"
+                class="img-responsive"
+              />
+            </a>
+          </div>
+          <div class="item">
+            <a href="#">
+              <img
+                src="assets/images/slider/slide-2.png"
+                alt="Slide-2"
+                class="img-responsive"
+              />
+            </a>
+          </div>
+        </section>
+        <!-- -------------------category----------- -->
+        <section id="ishicategory" class="ishicategoryblock">
+          <h3 class="home-title">
+            <span class="title-icon"><span></span></span>Shop By Category
+          </h3>
+          <div id="categories" class="ishicategoryblock-carousel owl-carousel">
+            <!-- Categories will be injected here -->
+          </div>
+        </section>
+        <!-- -------------------fourbanner---------- -->
+        <section id="ishifourbanner" class="ishifourbannerblock">
+          <div class="container">
+            <div class="row">
+              <div class="bannerleft col-md-4 col-sm-12">
+                <div class="bannerblock">
+                  <a href="#" class="ishi-customhover-fadeinrotate3D">
+                    <img
+                      src="assets/images/banner/1.png"
+                      alt="banner"
+                      class="img-responsive"
+                    />
+                  </a>
+                </div>
+              </div>
+              <div class="bannercenter col-md-4 col-sm-12">
+                <div class="bannerblock">
+                  <a href="#" class="ishi-customhover-fadeinrotate3D">
+                    <img
+                      src="assets/images/banner/2.png"
+                      alt="banner"
+                      class="img-responsive"
+                    />
+                  </a>
+                </div>
+                <div class="bannerblock">
+                  <a href="#" class="ishi-customhover-fadeinrotate3D">
+                    <img
+                      src="assets/images/banner/3.png"
+                      alt="banner"
+                      class="img-responsive"
+                    />
+                  </a>
+                </div>
+              </div>
+              <div class="bannerright col-md-4 col-sm-12">
+                <div class="bannerblock">
+                  <a href="#" class="ishi-customhover-fadeinrotate3D">
+                    <img
+                      src="assets/images/banner/4.png"
+                      alt="banner"
+                      class="img-responsive"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- products block-->
+        <section id="ishiproductsblock" class="ishiproductsblock container">
+          <h3 class="home-title">
+            <span class="title-icon"><span></span></span>Trending Products
+          </h3>
+
+          <div class="tab-content">
+            <div id="featured-products-block">
+              <div class="block_content">
+                <div id="ishi-featured-products" class="row">
+                  <!-- Products will be injected here -->
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button
+                type="button"
+                class="btn btn-primary mt-3"
+                onclick="viewMoreProducts()"
+              >
+                View More
+              </button>
+            </div>
+          </div>
+        </section>
+        <!-- ------------------gallery block---------- -->
+        <section id="ishigallery" class="ishibannerblock ishigalleryblock">
+          <h3 class="home-title">
+            <span class="title-icon"><span></span></span>Kid’s Gallery
+          </h3>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/1.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/2.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/3.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/4.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/5.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/6.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/7.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="bannerblock col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <div class="image-container">
+              <a href="#" class="ishi-customhover-fadeoutcenter">
+                <img
+                  src="assets/images/gallery/8.jpg"
+                  alt="banner-img"
+                  class="img-responsive"
+                />
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+      <!-- -----------------footer-------------------- -->
+      <%-include("./pages/footer.ejs")%>
+    </main>
+
+    <script>
+      let viewMoreProducts = () => {
+        window.location.href = "/collection";
+      };
+      let viewCategories = () => {
+        let categories = document.getElementById("categories");
+        fetch("/user/viewCategories")
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.error === false) {
+              let ans = `<div class="ishicategoryblock-carousel owl-carousel">`;
+              console.log(res.data);
+              for (let i = 0; i < res.data.length; i++) {
+                let x = res.data[i];
+                ans += `<div class="image-container col-sm-10">
+            <div class="item p-3">
+              <a href="/viewProductsByCategory/${x.category_id}">
+                <img
+                  src="${x.photo}"
+                  style="height:150px;width:150px"
+                  alt="category-${x.id}"
+                  class="img-responsive"
+                />
+              </a>
+              <div class="text-container" ><a href="/viewProductsByCategory/${x.category_id}">${x.category_name}</div>
+            </div>
+          </div>`;
+              }
+              ans += `</div>`;
+              categories.innerHTML = ans;
+
+              // Initialize or reinitialize Owl Carousel
+              $(document).ready(function () {
+                $(".owl-carousel").owlCarousel({
+                  loop: true,
+                  margin: 10,
+                  nav: true, // Enable navigation
+                  navText: [" ", " "], // Custom text for navigation buttons
+                  responsive: {
+                    0: {
+                      items: 1,
+                    },
+                    300: {
+                      items: 2,
+                    },
+                    600: {
+                      items: 3,
+                    },
+                    1000: {
+                      items: 4,
+                    },
+                    1200: {
+                      items: 5,
+                    },
+                  },
+                });
+              });
+
+              viewProducts();
+            } else {
+              console.error("Error fetching categories:", res.message);
+            }
+          })
+          .catch((error) => console.error("Error fetching data:", error));
+      };
+
+      let viewProducts = () => {
+        fetch("/user/viewProducts")
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.error === false) {
+              let ans = ``;
+              for (let i = 0; i < 4; i++) {
+                let x = res.data[i];
+                ans += `
+                <div class="product-thumb col-md-3 col-sm-4 col-xs-6">
+                  <div class="product-desc">
+                    <div class="product-title">
+                      <a href="/productPage/${x.product_id}">${x.name}</a>
+                    </div>
+                  </div>
+                  <div class="image">
+                    <a href="/productPage/${x.product_id}" class="thumbnail product-thumbnail">
+                      <img src="${x.photo}" alt="product-img" style="width: 250px; height: 250px;" />
+                      <img
+                                class="product-img-extra change"
+                                alt="product-img"
+                                src=${x.photo}
+                                 height="250"
+                                width="250"
+                              />
+                    </a>
+                  </div>
+                  <div class="caption">
+                    <a href="/productPage/${x.product_id}">
+                    <p class="description">${x.description}</p>
+                    <p class="price">
+                      <span class="regular price-old">${x.price}</span>
+                      <span class="price-discount">${x.discount}%</span>
+                      <span class="price-sale">${x.net_price}</span>
+                    </p>
+                    </a>
+                  </div>
+                </div>`;
+              }
+              document.getElementById("ishi-featured-products").innerHTML = ans;
+            }
+          });
+      };
+    </script>
+  </body>
+</html>

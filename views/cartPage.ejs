@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles")%>
+
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles")%>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+  <body id="cart" onload="showCart()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <%-include('./pages/userNavbar')%>
+
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------Breadcrumb------------ -->
+      <div class="breadcrumb-container">
+        <nav data-depth="2" class="breadcrumb container">
+          <h1 class="h1 category-title breadcrumb-title">Cart</h1>
+          <ul>
+            <li>
+              <a href="#">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>Cart</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- -----------Cart page----------- -->
+      <section id="wrapper">
+        <div class="container">
+          <div class="row">
+            <div id="content-wrapper" class="col-12 top-wrapper">
+              <section id="main">
+                <div class="cart-grid row">
+                  <!-- Left Block: cart product informations & shpping -->
+                  <div class="cart-grid-body col-xs-12 col-lg-8">
+                    <!-- cart products detailed -->
+                    <div class="card cart-container">
+                      <div class="card-block">
+                        <h1 class="h1">Shopping Cart</h1>
+                      </div>
+                      <hr class="separator" />
+                      <div id="cartProducts"></div>
+                    </div>
+                    <a class="btn btn-primary" href="/collection">
+                      <i class="material-icons"></i>Continue shopping
+                    </a>
+                  </div>
+
+                  <!-- Right Block: cart subtotal & cart total -->
+                  <div class="cart-grid-right col-xs-12 col-lg-4">
+                    <div class="card cart-summary">
+                      <div class="cart-detailed-totals">
+                        <div class="card-block">
+                          <div
+                            class="cart-summary-line"
+                            id="cart-subtotal-products"
+                          >
+                            <span
+                              class="label js-subtotal"
+                              id="totalitemsOfCart"
+                            >
+                              item
+                            </span>
+                            <span class="value" id="cartTotal"></span>
+                          </div>
+                          <div
+                            class="cart-summary-line"
+                            id="cart-subtotal-shipping"
+                          >
+                            <span class="label"> Shipping </span>
+                            <span class="value">$7.00</span>
+                            <div><small class="value"></small></div>
+                          </div>
+                        </div>
+                        <hr class="separator" />
+                        <div class="card-block">
+                          <div class="cart-summary-line cart-total">
+                            <span class="label">Total (tax excl.)</span>
+                            <span class="value" id="grandTotal"></span>
+                          </div>
+
+                          <div class="cart-summary-line">
+                            <small class="label">Taxes</small>
+                            <small class="value">$0.00</small>
+                          </div>
+                        </div>
+                        <hr class="separator" />
+                      </div>
+                      <div class="checkout cart-detailed-actions card-block">
+                        <div class="text-sm-center">
+                          <a href="/user/checkOut" class="btn btn-primary"
+                            >Proceed to checkout</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div id="block-reassurance" class="block-reassurance-cart">
+                      <ul>
+                        <li>
+                          <div class="block-reassurance-item">
+                            <img
+                              src="/assets/images/block-reassurance/1.png"
+                              alt="Security policy (edit with Customer reassurance module)"
+                            />
+                            <span class="h6"
+                              >Security policy (edit with Customer reassurance
+                              module)</span
+                            >
+                          </div>
+                        </li>
+                        <li>
+                          <div class="block-reassurance-item">
+                            <img
+                              src="/assets/images/block-reassurance/2.png"
+                              alt="Delivery policy (edit with Customer reassurance module)"
+                            />
+                            <span class="h6"
+                              >Delivery policy (edit with Customer reassurance
+                              module)</span
+                            >
+                          </div>
+                        </li>
+                        <li>
+                          <div class="block-reassurance-item">
+                            <img
+                              src="/assets/images/block-reassurance/3.png"
+                              alt="Return policy (edit with Customer reassurance module)"
+                            />
+                            <span class="h6"
+                              >Return policy (edit with Customer reassurance
+                              module)</span
+                            >
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- -----------------footer-------------------- -->
+      <%-include("./pages/footer")%>
+    </main>
+    <script>
+      // Function to update the price based on quantity
+      function updatePrice(product_id, net_price, quantity) {
+        let price = (net_price * quantity).toFixed(2); // Format price to 2 decimal places
+        console.log(`Updating price for ${product_id}. New price: $${price}`);
+
+        // Get the price element by its ID
+        let priceElement = document.getElementById(`price_${product_id}`);
+        if (priceElement) {
+          // Update the inner text of the price element
+          priceElement.innerHTML = `$${price}`;
+          // Call a function to update the total cart price
+          updateCartTotal();
+          showCart();
+        } else {
+          console.error(`Element with id "price_${product_id}" not found.`);
+        }
+      }
+
+      // Function to update the cart total
+      function updateCartTotal() {
+        let total = 0;
+
+        // Iterate over all elements with the class 'product-price'
+        document.querySelectorAll(".product-price").forEach((priceElement) => {
+          // Extract and parse the price from the element's text
+          let priceText = priceElement.innerText.replace("$", "").trim();
+          let price = parseFloat(priceText);
+          console.log(price);
+
+          // Check if the price is a valid number
+          if (!isNaN(price)) {
+            total += price;
+          } else {
+            console.warn(`Invalid price encountered: "${priceText}"`);
+          }
+        });
+
+        // Update the total amount and grand total
+        document.getElementById("cartTotal").innerText = `$${total.toFixed(2)}`;
+        document.getElementById("grandTotal").innerText = `$${(
+          total + 7
+        ).toFixed(2)}`; // Example with a fixed shipping cost
+
+        //console.log(`Cart Total: $${total.toFixed(2)}`);
+        //console.log(`Grand Total: $${(total + 7).toFixed(2)}`);
+      }
+
+      // Function to increase the quantity of a product
+      function increase(product_id, net_price) {
+        let quantityElement = document.getElementById(`quantity_${product_id}`);
+        let quantity = parseInt(quantityElement.value);
+        console.log(`Increasing quantity. Current: ${quantity}`);
+
+        if (quantity >= 5) {
+          Swal.fire({
+            icon: "error",
+            title: "Items cannot be more than 5",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          return; // Exit function if quantity is already at maximum
+        }
+
+        quantity++;
+        quantityElement.value = quantity;
+        updatePrice(product_id, net_price, quantity); // Update price based on new quantity
+        UpdateQuantity(product_id);
+      }
+
+      // Function to decrease the quantity of a product
+      function decrease(product_id, net_price) {
+        let quantityElement = document.getElementById(`quantity_${product_id}`);
+        let quantity = parseInt(quantityElement.value);
+        console.log(`Decreasing quantity. Current: ${quantity}`);
+
+        if (quantity <= 1) {
+          Swal.fire({
+            icon: "error",
+            title: "Item cannot be less than 1",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          return; // Exit function if quantity is already at minimum
+        }
+
+        quantity--;
+        quantityElement.value = quantity;
+        updatePrice(product_id, net_price, quantity); // Update price based on new quantity
+        UpdateQuantity(product_id);
+      }
+
+      // Function to delete an item from the cart
+      async function DeleteItem(product_id) {
+        if (confirm("Are you sure to delete")) {
+          let url = "/user/deleteItem/" + product_id;
+          let response = await fetch(url, {
+            headers: { "Content-Type": "application/json" },
+          });
+          response = await response.json();
+          if (response.error) {
+            Swal.fire({
+              icon: "error",
+              title: response.error,
+              timer: 3000,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: response.message,
+              timer: 3000,
+            });
+            showCart(); // Refresh cart after deletion
+          }
+        }
+      }
+
+      // Function to update the quantity of an item in the database
+      async function UpdateQuantity(product_id) {
+        let quantity = document.getElementById(`quantity_${product_id}`).value;
+        let url = "/user/updateQuantity/" + product_id;
+        let response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({ quantity: quantity }),
+        });
+        response = await response.json();
+        if (response.error) {
+          Swal.fire({
+            icon: "error",
+            title: response.error,
+            timer: 3000,
+          });
+        }
+      }
+
+      // Fetch and display cart products
+      let showCart = () => {
+        fetch("/user/cartProducts")
+          .then((res) => res.json())
+          .then((res) => {
+            if (!res.error) {
+              let cartItems = res.data.length;
+              document.getElementById(
+                "totalitemsOfCart"
+              ).innerHTML = `${cartItems} Items`;
+              let cartContainer = document.getElementById("cartProducts");
+              let ans = "";
+              for (let i = 0; i < res.data.length; i++) {
+                let x = res.data[i];
+                ans += `<div class="cart-overview js-cart" data-refresh-url="">
+              <ul class="cart-items">
+                <li class="cart-item">
+                  <div class="product-line-grid row">
+                    <div class="product-line-grid-left col-md-2 col-xs-4">
+                      <span class="product-image media-middle">
+                        <img src="${x.photo}" alt="${x.name}">
+                      </span>
+                    </div>
+                    <div class="product-line-grid-body col-md-5 col-xs-8">
+                      <div class="product-line-info">
+                        <a class="label" href="#" data-id_customization="0">${
+                          x.name
+                        }</a>
+                      </div>
+                      <p class="product-desc">${x.description}</p>
+                      <div class="product-line-info  h5">
+                        <span  id="price_${x.product_id}">
+                          $${(x.net_price * x.quantity).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                    <div class="product-line-grid-right product-line-actions col-md-5 col-xs-12">
+                      <div class="row">
+                        <div class="product_qty_price col-md-10 col-xs-10">
+                          <div class="row">
+                            <p>Quantity</p>
+                            <i class="fa-solid fa-minus" onclick="decrease(${
+                              x.product_id
+                            }, ${x.net_price})"></i>
+                            <input type="text" name="quantity" value="${
+                              x.quantity
+                            }" id="quantity_${x.product_id}" />
+                            <i class="fa-solid fa-plus" onclick="increase(${
+                              x.product_id
+                            }, ${x.net_price})"></i>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6 price">
+                          <span class="product-price" id="price_${
+                            x.product_id
+                          }">
+                            $${(x.net_price * x.quantity).toFixed(2)}
+                          </span>
+                        </div>
+                        <div class="col-md-2 col-xs-2 text-xs-center cart-line-product">
+                          <button type="button" onclick="DeleteItem(${
+                            x.product_id
+                          })" class="btn btn-primary">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <hr class="separator">`;
+              }
+              cartContainer.innerHTML = ans;
+              updateCartTotal(); // Update the total amount initially
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching cart products:", error)
+          );
+      };
+
+      // Call showCart when the DOM is fully loaded
+    </script>
+  </body>
+</html>

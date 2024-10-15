@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles.ejs")%>
+
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+
+  <body id="left_column_categorypage" onload="viewRideOnProducts()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <% if (loggedIn) { %> <%- include('./pages/userNavbar.ejs') %> <% } else {
+      %> <%- include('./pages/header.ejs') %> <% } %>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------Breadcrumb------------ -->
+      <div class="breadcrumb-container">
+        <nav data-depth="2" class="breadcrumb container">
+          <h1 class="h1 category-title breadcrumb-title">Category</h1>
+          <ul>
+            <li>
+              <a href="#">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>Products By Category</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- -----------Category page------------- -->
+      <section id="wrapper">
+        <div class="container">
+          <div class="row">
+            <div id="content-wrapper" class="col-12">
+              <section id="main">
+                <input
+                  id="ishiCartURL"
+                  name="ishicarturl"
+                  value="#"
+                  type="hidden"
+                />
+                <input
+                  id="ishiStaticToken"
+                  name="ishistatictoken"
+                  value="3d2187fdc78a54510e1e1670c3ff42b0"
+                  type="hidden"
+                />
+                <div class="block-category card card-block">
+                  <div class="category-cover">
+                    <img
+                      src="/assets/images/fullwidth-category_img.jpg"
+                      alt="category-img"
+                    />
+                  </div>
+                </div>
+                <div class="category-info">
+                  <h1 class="h1" id="toysHeading"></h1>
+                  <div id="category-description">
+                    <p>You will find here all toys collections.</p>
+                    <p id="description"></p>
+                  </div>
+                </div>
+                <section id="products" class="category-product-info">
+                  <div id="product-list-top">
+                    <div
+                      id="js-product-list-top"
+                      class="row products-selection"
+                    >
+                      <div class="col-lg-6 total-products">
+                        <span class="layout-options">
+                          <span id="grid-view" class="checked"></span>
+                          <span id="list-view"></span>
+                        </span>
+                        <p id="totalProducts"></p>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="row sort-by-row">
+                          <span
+                            class="col-sm-3 col-xs-12 col-md-3 hidden-lg-down sort-by"
+                            >Sort by:</span
+                          >
+                          <div
+                            class="col-sm-9 col-xs-12 col-md-9 products-sort-order dropdown"
+                          >
+                            <a
+                              class="select-title"
+                              rel="nofollow"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                              >Relevance<i class="material-icons pull-xs-right"
+                                >&#xE5C5;</i
+                              ></a
+                            >
+                            <div class="dropdown-menu">
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list current js-search-link"
+                                >Relevance</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Name, A to Z</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Name, Z to A</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Price, low to high</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Price, high to low</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden-sm-down">
+                    <section id="js-active-search-filters" class="hide">
+                      <h1 class="h6 hidden-xs-up">Active filters</h1>
+                    </section>
+                  </div>
+                  <div id="js-product-list">
+                    <div class="products row">
+                      <div id="products-coll"></div>
+                    </div>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- -----------------footer-------------------- -->
+      <%-include("./pages/footer.ejs")%>
+    </main>
+    <%-include("./pages/scriptfiles.ejs")%>
+  </body>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var currentLayout = $.totalStorage("productLayout");
+      if (currentLayout && currentLayout == "listView") {
+        $("#grid-view").removeClass("checked");
+        setProductLayout("listView");
+      } else {
+        setProductLayout("gridView");
+      }
+
+      $(document).on("click", "#list-view", function (e) {
+        if ($(this).hasClass("checked")) return;
+        $("#js-product-list").fadeOut(500, function () {
+          setProductLayout("listView");
+        });
+        $("#js-product-list").fadeIn(500);
+      });
+
+      $(document).on("click", "#grid-view", function (e) {
+        if ($(this).hasClass("checked")) return;
+        $("#js-product-list").fadeOut(500, function () {
+          setProductLayout("gridView");
+        });
+        $("#js-product-list").fadeIn(500);
+      });
+      function setProductLayout(layout) {
+        if (layout == "listView") {
+          $("#list-view").addClass("checked");
+          $("#grid-view").removeClass("checked");
+          $("#js-product-list .products").removeClass("grid");
+          $("#js-product-list .products").addClass("list");
+          $("#js-product-list .products article").each(function () {
+            $(this).removeClass(" col-sm-6 col-md-4 col-lg-4 col-xl-3");
+            $(this)
+              .find(".image")
+              .addClass("col-xs-12 col-sm-6 col-md-5 col-lg-4 col-xl-3");
+            $(this)
+              .find(".caption")
+              .addClass("col-xs-12 col-sm-6 col-md-7 col-lg-8 col-xl-9");
+          });
+          $.totalStorage("productLayout", "listView");
+        } else {
+          $("#grid-view").addClass("checked");
+          $("#list-view").removeClass("checked");
+          $("#js-product-list .products").removeClass("list");
+          $("#js-product-list .products").addClass("grid");
+          $("#js-product-list .products article").each(function () {
+            $(this).addClass(" col-sm-6 col-md-4 col-lg-4 col-xl-3");
+            $(this)
+              .find(".image")
+              .removeClass("col-xs-12 col-sm-6 col-md-5 col-lg-4 col-xl-3");
+            $(this)
+              .find(".caption")
+              .removeClass("col-xs-12 col-sm-6 col-md-7 col-lg-8 col-xl-9");
+          });
+          $.totalStorage("productLayout", "gridView");
+        }
+      }
+    });
+
+    let viewRideOnProducts = () => {
+      fetch(`/productsByCategory/<%=id%>`)
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.error === false) {
+            console.log(res.data);
+            let heading = res.data[0].category_name;
+            document.getElementById("toysHeading").innerHTML = `${heading}`;
+            let des = res.data[0].description;
+            document.getElementById("description").innerHTML = `${des}`;
+            let totlproducts = res.data.length;
+            document.getElementById(
+              "totalProducts"
+            ).innerHTML = `There are ${totlproducts} products available. `;
+            let ans = `<div class=row>`;
+            for (let i = 0; i < res.data.length; i++) {
+              let x = res.data[i];
+
+              ans += `<article
+                        class="product-miniature js-product-miniature col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3"
+                      >
+                        <div class="product-container product-thumb">
+                          <div class="product-desc">
+                            <div class="product-title">
+                              <a href="/${x.name}">${x.name}</a>
+                            </div>
+                          </div>
+                          <div class="image">
+                            <a href="/productPage/${x.product_id}" class="thumbnail product-thumbnail">
+                              <img
+                                src="${x.photo}"
+                                alt="product-img"
+                                height="250"
+                                width="250"
+                              />
+                              <img
+                                class="product-img-extra change"
+                                alt="product-img"
+                                src=${x.photo}
+                                 height="250"
+                                width="250"
+                              />
+                            </a>
+                            <span class="outstock-overlay">SOLD OUT</span>
+                            <div class="product-flags">
+                              <div class="sale">Sale</div>
+                            </div>
+                          </div>
+                          <div class="caption">
+                            <a href="/productPage/${x.product_id}">
+                            <p class="price">
+                              <span class="regular price-old">$${x.price}</span>
+                              <span class="price-discount">${x.discount}%</span>
+                              <span class="price-sale">$${x.net_price}</span>
+                            </p>
+                            </a>
+
+                            <p class="description">
+                              ${x.description}
+                            </p>
+
+                          </div>
+                        </div>
+                        </article>`;
+            }
+            ans += `</div>`;
+            document.getElementById("products-coll").innerHTML = ans;
+          }
+        });
+    };
+  </script>
+</html>

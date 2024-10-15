@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles.ejs")%>
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles.ejs")%>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+
+  <body id="index" onload="viewMyOrders()">
+    <div class="modal" tabindex="-1" role="dialog" id="productDetailsModal">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Product Details</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="modalForm"></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main>
+      <!-- --------------------loader------------ -->
+
+      <!-- --------------------header------------ -->
+      <%-include("./pages/adminNavbar.ejs")%>
+      <!-- -------------------mobile media---------- -->
+
+      <!-- --------------------hometop------------ -->
+      <h2 class="mt-5 p-5 text-center">Order Details</h2>
+      <div id="dataResult"></div>
+      <!-- -----------------footer-------------------- -->
+    </main>
+    <script>
+      let viewMyOrders = () => {
+        fetch("/admin/getAllOrders")
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            if (res.error === false) {
+              let ans = `<table class='table'>
+      <thead>
+      <tr class="text-center">
+      <th>Order ID</th>
+      <th>User ID</th>
+ 
+      <th>AMOUNT</th>
+      <th>PAYMENT MODE</th>
+      <th>DATE</th>
+
+      </tr>
+      </thead>`;
+              let records = res.record;
+              console.log(records);
+              if (records.length > 0) {
+                records.forEach((data) => {
+                  ans += `<tr class="text-center">
+      <td>${data.id}</td>
+      <td>${data.user_id}</td>
+
+      <td>$${data.total}</td>
+      <td>${data.payment_mode}</td>
+      <td>${data.date_time}</td>
+      
+      
+
+      </tr>`;
+                });
+              } else {
+                ans += `<tr class="text-center">
+                        <td colspan="12"> <div class="alert alert-danger">No data found</div></td></tr>`;
+              }
+
+              ans += `</table>`;
+              document.getElementById("dataResult").innerHTML = ans;
+            }
+          });
+      };
+    </script>
+  </body>
+</html>

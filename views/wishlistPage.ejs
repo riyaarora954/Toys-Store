@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <!-- Stylesheets
+  ============================================= -->
+    <%-include("./pages/headerfiles.ejs")%>
+    <%-include("./pages/scriptfiles.ejs")%>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+
+  <body id="mywishlist" onload="viewWishlist()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <%-include("./pages/header.ejs")%>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------Breadcrumb------------ -->
+      <div class="breadcrumb-container">
+        <nav data-depth="2" class="breadcrumb container">
+          <h1 class="h1 category-title breadcrumb-title">wishlist</h1>
+          <ul>
+            <li>
+              <a href="/">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="/wishlist">
+                <span>Wishlist</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- ----------------contactpage----------- -->
+      <section id="wrapper">
+        <div id="content-wrapper">
+          <div class="container">
+            <div class="row">
+              <div id="wishlist-history" class="block-center col-12">
+                <div id="dataresult"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- -----------------footer-------------------- -->
+      <%-include("./pages/footer.ejs")%>
+    </main>
+    <script>
+      let viewWishlist = () => {
+        fetch("/user/viewWishlistItems")
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            let ans = `<table class="std table table-bordered">
+          <thead>
+            <tr>
+              <th class="first_item">Image</th>
+              <th class="item mywishlist_first">Product Name</th>
+              <th class="item mywishlist_first">Price</th>
+              <th class="item mywishlist_second">Action</th>
+              <th class="last_item mywishlist_first">
+                <i class="fa fa-times"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+            if (res.error === false && res.data.length > 0) {
+              for (let i = 0; i < res.data.length; i++) {
+                let x = res.data[i];
+                ans += `<tr>
+              <td class="wishlist-product-image" style="width: 150px">
+                <a class="wishlist-item-link" href="#">
+                  <img
+                    class="js-qv-product-cover"
+                    src="${x.photo}"
+                    alt="product-image"
+                    title="product-image"
+                  />
+                </a>
+              </td>
+              <td class="bold align_center wishlist-product-name">
+                <a class="wishlist-item-link" href="#">${x.name}</a>
+              </td>
+              <td class="bold align_center wishlist-product-price">
+                <span class="money">$${x.price}</span>
+              </td>
+              <td class="add">
+                <button
+                  class="btn btn-primary add-to-cart"
+                  type="button"
+                  onclick="AddToCart('${x.product_id}')"
+                >
+                  Add to cart
+                </button>
+              </td>
+              <td class="remove">
+                <a href="javascript:void(0)">
+                  <i class="fa fa-times" onclick="DeleteItem('${x.product_id}')"></i>
+                </a>
+              </td>
+            </tr>`;
+              }
+            } else {
+              ans += `<tr class="text-center">
+                    <td colspan="5">
+                      <div class="alert alert-danger">No data found</div>
+                    </td>
+                  </tr>`;
+            }
+
+            ans += `</tbody></table>`;
+            document.getElementById("dataresult").innerHTML = ans;
+          });
+      };
+      async function AddToCart(product_id) {
+        let url = "/user/check-user-logged-in";
+        let response = await fetch(url);
+        response = await response.json();
+        console.log(response);
+        if (!response.loggedIn) {
+          window.location.href = "/user/login";
+        } else {
+          let url = "/user/myCartData/" + product_id;
+          let response = await fetch(url, {
+            headers: { "Content-Type": "application/json" },
+          });
+          response = await response.json();
+          console.log(response);
+          if (response.error == true) {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              timer: 3000,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "Item added to Cart",
+              timer: 3000,
+            });
+          }
+        }
+        // window.location.href = "/user/myCart";
+      }
+      async function DeleteItem(product_id) {
+        if (confirm("Are you sure to delete")) {
+          let url = "/user/deleteWishlistItem/" + product_id;
+          let response = await fetch(url, {
+            headers: { "Content-Type": "application/json" },
+          });
+          response = await response.json();
+          if (response.error) {
+            Swal.fire({
+              icon: "error",
+              title: response.error,
+              timer: 3000,
+            });
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: response.message,
+              timer: 3000,
+            });
+            viewWishlist(); // Refresh cart after deletion
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

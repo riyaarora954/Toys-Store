@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include("./pages/headerfiles.ejs") %> <%- include("./pages/headerfiles")
+    %>
+    <title>OTP Verification</title>
+  </head>
+  <body>
+    <%- include("./pages/header.ejs") %>
+    <div class="container">
+      <div class="row">
+        <h1 class="p-5">OTP Verification</h1>
+      </div>
+      <form id="userotp">
+        <div class="row mt-3">
+          <div class="col-sm-6">
+            <label for="otp" class="form-label">Enter OTP:</label>
+          </div>
+          <input type="hidden" name="email" id="email" />
+          <div class="col-sm-6">
+            <input type="number" name="otp" id="otp" class="form-control" />
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-12 text-center">
+            <button type="button" class="btn btn-primary" onclick="verifyOTP()">
+              Verify OTP
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <%- include("./pages/footer") %>
+    <script>
+      let verifyOTP = () => {
+        let form = document.getElementById("userotp");
+        let fd = new FormData(form);
+        fetch(`/user/verify-User-OTP/<%=email%>`, { method: "POST", body: fd })
+          .then((res) => res.json())
+          .then((res) => {
+            console.log(res);
+            if (res.error == true) {
+              alert(res.message);
+            } else {
+              console.log(res);
+              alert("OTP Verified Successfully");
+              window.location.href = `/user/userSetPassword/<%=email%>`;
+            }
+          });
+      };
+    </script>
+  </body>
+</html>

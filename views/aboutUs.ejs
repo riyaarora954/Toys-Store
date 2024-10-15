@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <!-- Document Meta
+  ============================================= -->
+    <%-include("./pages/headerfiles.ejs")%>
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles.ejs")%>
+
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+  <body id="about-us">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader------------ -->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <% if (loggedIn) { %> <%- include('./pages/userNavbar.ejs') %> <% } else {
+      %> <%- include('./pages/header.ejs') %> <% } %>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------Breadcrumb------------ -->
+      <div class="breadcrumb-container">
+        <nav data-depth="2" class="breadcrumb container">
+          <h1 class="h1 category-title breadcrumb-title">About Us</h1>
+          <ul>
+            <li>
+              <a href="#">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <span>About Us</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- -----------Cart page----------- -->
+      <section id="wrapper">
+        <div class="container">
+          <div id="content-wrapper" class="col-xs-12">
+            <section id="main">
+              <div class="about-page">
+                <div class="about-container">
+                  <h2 class="home-title">Story Block</h2>
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                      <div class="about-us">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetuer adipiscing
+                          elit, sed diam nonummy nibh euismod tincidunt ut
+                          laoreet dolore magna aliquam erat volutpat. Ut wisi
+                          enim ad minim veniam, quis nostrud exerci tation
+                          ullamcorper suscipit lobortis nisl ut aliquip.
+                        </p>
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetuer adipiscing
+                          elit, sed diam nonummy nibh euismod tincidunt ut
+                          laoreet dolore magna aliquam erat volutpat. Ut wisi
+                          enim ad minim veniam,
+                        </p>
+                        <p>
+                          quis nostrud exercitation ullamcorper suscipit
+                          lobortis nisl ut aliquip.
+                        </p>
+                        <button
+                          class="btn btn-primary"
+                          name="continue"
+                          type="submit"
+                        >
+                          Shop Now
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                      <a href="#"
+                        ><img alt="about-img" src="assets/images/about-img.png"
+                      /></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="block-title">
+                  <h2 class="home-title">Something about us</h2>
+                  <p>
+                    Leverage agile frameworks to provide a robust synopsis for
+                    high level overviews. Iterative to corporate strategy to the
+                    table win-win survival strategies to ensure
+                  </p>
+                </div>
+                <div class="about-services">
+                  <div class="row">
+                    <div class="col-lg-4 col-md-6 service">
+                      <img alt="icon-1" src="assets/images/icons/icon-1.png" />
+                      <h3>free resources</h3>
+                      <p>
+                        Bring to the table win-win survival strategies to ensure
+                        proactive domination. At the end of the day, going
+                        forward
+                      </p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 service">
+                      <img alt="icon-2" src="assets/images/icons/icon-2.png" />
+                      <h3>multi-purpose</h3>
+                      <p>
+                        Bring to the table win-win survival strategies to ensure
+                        proactive domination. At the end of the day, going
+                        forward
+                      </p>
+                    </div>
+                    <div class="col-lg-4 col-md-12 service">
+                      <img alt="icon-3" src="assets/images/icons/icon-3.png" />
+                      <h3>fully responsive</h3>
+                      <p>
+                        Bring to the table win-win survival strategies to ensure
+                        proactive domination. At the end of the day, going
+                        forward
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+      <!-- -----------------footer-------------------- -->
+      <%-include("./pages/footer.ejs")%>
+    </main>
+  </body>
+</html>

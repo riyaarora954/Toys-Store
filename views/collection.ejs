@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+  <head>
+    <%-include("./pages/headerfiles.ejs")%>
+
+    <!-- JavaScripts
+  ============================================= -->
+    <%-include("./pages/scriptfiles.ejs")%>
+    <!-- Document Title
+  ============================================= -->
+    <title>ToyTown - Responsive HTML5 Template</title>
+  </head>
+
+  <body id="left_column_categorypage" onload="viewCollection()">
+    <main>
+      <div id="menu_wrapper" class=""></div>
+      <!-- --------------------loader--------------->
+      <div id="spin-wrapper"></div>
+      <div id="siteloader">
+        <div class="loader"></div>
+      </div>
+      <!-- --------------------header------------ -->
+      <% if (loggedIn) { %> <%- include('./pages/userNavbar.ejs') %> <% } else {
+      %> <%- include('./pages/header.ejs') %> <% } %>
+      <!-- -------------------mobile media---------- -->
+      <div
+        id="mobile_top_menu_wrapper"
+        class="hidden-lg-up"
+        style="display: none"
+      >
+        <div id="top_menu_closer">
+          <i class="material-icons"></i>
+        </div>
+        <div class="js-top-menu mobile" id="_mobile_top_menu"></div>
+      </div>
+      <!-- --------------------Breadcrumb------------ -->
+      <div class="breadcrumb-container">
+        <nav data-depth="2" class="breadcrumb container">
+          <h1 class="h1 category-title breadcrumb-title">Category</h1>
+          <ul>
+            <li>
+              <a href="/">
+                <span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a href="/collection">
+                <span>Products Collection</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- -----------Category page------------- -->
+      <section id="wrapper">
+        <div class="container">
+          <div class="row">
+            <div id="content-wrapper" class="col-12">
+              <section id="main">
+                <input
+                  id="ishiCartURL"
+                  name="ishicarturl"
+                  value="#"
+                  type="hidden"
+                />
+                <input
+                  id="ishiStaticToken"
+                  name="ishistatictoken"
+                  value="3d2187fdc78a54510e1e1670c3ff42b0"
+                  type="hidden"
+                />
+                <div class="block-category card card-block">
+                  <div class="category-cover">
+                    <img
+                      src="assets/images/fullwidth-category_img.jpg"
+                      alt="category-img"
+                    />
+                  </div>
+                </div>
+                <div class="category-info">
+                  <h1 class="h1">All Products</h1>
+                  <div id="category-description">
+                    <p>You will find here all kids toys collection.</p>
+                    <p>
+                      This collection includes all the toys related to kids from
+                      age group 2-10yrs.
+                    </p>
+                    <p>Various categories are available.</p>
+                  </div>
+                </div>
+                <section id="products" class="category-product-info">
+                  <div id="product-list-top">
+                    <div
+                      id="js-product-list-top"
+                      class="row products-selection"
+                    >
+                      <div class="col-lg-6 total-products">
+                        <span class="layout-options">
+                          <span id="grid-view" class="checked"></span>
+                          <span id="list-view"></span>
+                        </span>
+                        <p id="totalproducts"></p>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="row sort-by-row">
+                          <span
+                            class="col-sm-3 col-xs-12 col-md-3 hidden-lg-down sort-by"
+                            >Sort by:</span
+                          >
+                          <div
+                            class="col-sm-9 col-xs-12 col-md-9 products-sort-order dropdown"
+                          >
+                            <a
+                              class="select-title"
+                              rel="nofollow"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                              >Relevance<i class="material-icons pull-xs-right"
+                                >&#xE5C5;</i
+                              ></a
+                            >
+                            <div class="dropdown-menu">
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list current js-search-link"
+                                >Relevance</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Name, A to Z</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Name, Z to A</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Price, low to high</a
+                              >
+                              <a
+                                rel="nofollow"
+                                href="#"
+                                class="select-list js-search-link"
+                                >Price, high to low</a
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="hidden-sm-down">
+                    <section id="js-active-search-filters" class="hide">
+                      <h1 class="h6 hidden-xs-up">Active filters</h1>
+                    </section>
+                  </div>
+                  <div id="js-product-list">
+                    <div class="products row">
+                      <div id="products-coll"></div>
+                    </div>
+                  </div>
+                </section>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- -----------------footer-------------------- -->
+      <footer id="footer">
+        <div class="footer-container">
+          <div class="container">
+            <div class="row">
+              <!-- -------------------storeinfo---------- -->
+              <div
+                id="ishistoreinfo"
+                class="col-lg-3 col-md-12 col-sm-12 col-xs-12"
+              >
+                <div id="ishistoreinfo-container" class="ishistoreinfo-inner">
+                  <a href="index.html" class="store-logo">
+                    <img
+                      src="assets/images/footer-logo.png"
+                      alt="footer-logo"
+                    />
+                  </a>
+                  <div class="store-description">
+                    <p>
+                      This is Photoshops version of Lorem fenIpsum. Proin
+                      gravida nibh sagitt sem nibh id elit.Proin gravida nibh
+                      sagitt sem nibh id elit.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                id="_mobile_storeinfo"
+                class="block-contact col-md-12 col-sm-12 col-xs-12 footer-block"
+              ></div>
+              <!-- -------------------myaccount---------- -->
+              <div
+                class="col-lg-3 col-md-12 col-sm-12 col-xs-12 links wrapper footer-block"
+              >
+                <h3 class="h3 title_block hidden-md-down">Your account</h3>
+                <div
+                  class="footer-title clearfix hidden-lg-up collapsed"
+                  data-target="#footer_account_list"
+                  data-toggle="collapse"
+                >
+                  <span class="h3">Your account</span>
+                  <span class="float-xs-right">
+                    <span class="navbar-toggler collapse-icons">
+                      <i class="material-icons add"></i>
+                      <i class="material-icons remove"></i>
+                    </span>
+                  </span>
+                </div>
+                <ul id="footer_account_list" class="footer-dropdown collapse">
+                  <li>
+                    <a class="cms-page-link" href="#"> Personal info </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> Orders </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> Credit slips </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> Addresses </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> My Wishlists </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- -------------------linklist---------- -->
+              <div
+                class="col-lg-3 col-md-12 col-sm-12 col-xs-12 links wrapper footer-block"
+              >
+                <h3 class="h3 title_block hidden-md-down">Product</h3>
+                <div
+                  class="footer-title clearfix hidden-lg-up collapsed"
+                  data-target="#footer_sub_menu_83280"
+                  data-toggle="collapse"
+                >
+                  <span class="h3 title_block">Product</span>
+                  <span class="navbar-toggler collapse-icons">
+                    <i class="material-icons add"></i>
+                    <i class="material-icons remove"></i>
+                  </span>
+                </div>
+                <ul id="footer_sub_menu_83280" class="footer-dropdown collapse">
+                  <li>
+                    <a class="cms-page-link" href="#"> Delivery </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> Legal Notice </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> Prices drop </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> New products </a>
+                  </li>
+                  <li>
+                    <a class="cms-page-link" href="#"> Best sales </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- -------------------contactblock ---------- -->
+              <div
+                id="_desktop_storeinfo"
+                class="block-contact col-lg-3 col-md-12 col-sm-12 col-xs-12 footer-block"
+              >
+                <h3 class="h3 title_block hidden-md-down">Store information</h3>
+                <div id="contact-info-container" class="footer-contact">
+                  <div
+                    class="block address col-lg-12 col-md-4 col-sm-4 col-xs-12"
+                  >
+                    <span class="icon"><i class="material-icons"></i></span>
+                    <div class="content">
+                      Demo Shop<br />01 Demo Street<br />France
+                    </div>
+                  </div>
+                  <div
+                    class="block phone col-lg-12 col-md-4 col-sm-4 col-xs-12"
+                  >
+                    <span class="icon phone"
+                      ><i class="material-icons"></i></span
+                    >
+                    <div class="content">
+                      <a href="#">+00 900 123456789</a>
+                    </div>
+                  </div>
+                  <div
+                    class="block email col-lg-12 col-md-4 col-sm-4 col-xs-12"
+                  >
+                    <span class="icon"><i class="material-icons"></i></span>
+                    <div class="content">
+                      <a href="#">admin@gmail.com</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-after">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 col-xs-12">
+                <!-- -------------------copyrights---------- -->
+                <p class="footer-aftertext">
+                  <a class="_blank" href="#" target="_blank">
+                    Copyright 2020 All Rights Reserved
+                  </a>
+                </p>
+              </div>
+              <div class="col-lg-6 col-xs-12">
+                <!-- -------------------payment block---------- -->
+                <div class="paymentlogo-container">
+                  <img src="assets/images/paymenticon/1.png" alt="Discover" />
+                  <img src="assets/images/paymenticon/2.png" alt="Visa" />
+                  <img src="assets/images/paymenticon/3.png" alt="JCB" />
+                  <img src="assets/images/paymenticon/4.png" alt="PayPal" />
+                  <img
+                    src="assets/images/paymenticon/5.png"
+                    alt="Master Card"
+                  />
+                  <img
+                    src="assets/images/paymenticon/6.png"
+                    alt="American Express"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a id="slidetop" href="#"></a>
+      </footer>
+    </main>
+  </body>
+</html>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var currentLayout = $.totalStorage("productLayout");
+    if (currentLayout && currentLayout == "listView") {
+      $("#grid-view").removeClass("checked");
+      setProductLayout("listView");
+    } else {
+      setProductLayout("gridView");
+    }
+
+    $(document).on("click", "#list-view", function (e) {
+      if ($(this).hasClass("checked")) return;
+      $("#js-product-list").fadeOut(500, function () {
+        setProductLayout("listView");
+      });
+      $("#js-product-list").fadeIn(500);
+    });
+
+    $(document).on("click", "#grid-view", function (e) {
+      if ($(this).hasClass("checked")) return;
+      $("#js-product-list").fadeOut(500, function () {
+        setProductLayout("gridView");
+      });
+      $("#js-product-list").fadeIn(500);
+    });
+    function setProductLayout(layout) {
+      if (layout == "listView") {
+        $("#list-view").addClass("checked");
+        $("#grid-view").removeClass("checked");
+        $("#js-product-list .products").removeClass("grid");
+        $("#js-product-list .products").addClass("list");
+        $("#js-product-list .products article").each(function () {
+          $(this).removeClass(" col-sm-6 col-md-4 col-lg-4 col-xl-3");
+          $(this)
+            .find(".image")
+            .addClass("col-xs-12 col-sm-6 col-md-5 col-lg-4 col-xl-3");
+          $(this)
+            .find(".caption")
+            .addClass("col-xs-12 col-sm-6 col-md-7 col-lg-8 col-xl-9");
+        });
+        $.totalStorage("productLayout", "listView");
+      } else {
+        $("#grid-view").addClass("checked");
+        $("#list-view").removeClass("checked");
+        $("#js-product-list .products").removeClass("list");
+        $("#js-product-list .products").addClass("grid");
+        $("#js-product-list .products article").each(function () {
+          $(this).addClass(" col-sm-6 col-md-4 col-lg-4 col-xl-3");
+          $(this)
+            .find(".image")
+            .removeClass("col-xs-12 col-sm-6 col-md-5 col-lg-4 col-xl-3");
+          $(this)
+            .find(".caption")
+            .removeClass("col-xs-12 col-sm-6 col-md-7 col-lg-8 col-xl-9");
+        });
+        $.totalStorage("productLayout", "gridView");
+      }
+    }
+  });
+  let viewCollection = () => {
+    fetch("/viewCollection")
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.error === false) {
+          console.log(res.data);
+          let totlproducts = res.data.length;
+          document.getElementById(
+            "totalproducts"
+          ).innerHTML = `There are ${totlproducts} products available. `;
+          let ans = `<div class=row>`;
+          for (let i = 0; i < res.data.length; i++) {
+            let x = res.data[i];
+
+            ans += `<article
+                        class="product-miniature js-product-miniature col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-3"
+                      >
+                        <div class="product-container product-thumb">
+                          <div class="product-desc">
+                            <div class="product-title">
+                              <a href="/${x.name}">${x.name}</a>
+                            </div>
+                          </div>
+                          <div class="image">
+                            <a href="/productPage/${x.product_id}" class="thumbnail product-thumbnail">
+                              <img
+                                src=${x.photo}
+                                alt="product-img" 
+                                height="250"
+                                width="250"
+                              />
+                              <img
+                                class="product-img-extra change"
+                                alt="product-img"
+                                src=${x.photo}
+                                 height="250"
+                                width="250"
+                              />
+                            </a>
+                            <span class="outstock-overlay">SOLD OUT</span>
+                            <div class="product-flags">
+                              <div class="sale">Sale</div>
+                            </div>
+                          </div>
+                          <div class="caption">
+                            <a href="/productPage/${x.product_id}">
+                            <p class="price">
+                              <span class="regular price-old">$${x.price}</span>
+                              <span class="price-discount">${x.discount}%</span>
+                              <span class="price-sale">$${x.net_price}</span>
+                            </p>
+
+                            <p class="description">
+                              ${x.description}
+                            </p>
+                            </a>
+                            
+                          </div>
+                        </div>
+                        </article>`;
+          }
+          ans += `</div>`;
+          document.getElementById("products-coll").innerHTML = ans;
+        }
+      });
+  };
+</script>
