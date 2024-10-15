@@ -9,7 +9,7 @@ let conn = mysql.createConnection({
 });
 conn.connect((e) => {
   if (e) {
-    console.log(response.message);
+    console.log(e.message);
   } else {
     console.log("Connected to database");
   }
