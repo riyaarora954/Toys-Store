@@ -15,7 +15,7 @@ userController.orderDetails = async (req, res) => {
   res.render("viewUserOrders.ejs", { user_id: req.user });
 };
 userController.addToCartPage = async (req, res) => {
-  res.render("cartPage.ejs");
+  res.render("cartPage.ejs", { loggedIn: req.loggedIn });
 };
 userController.checkOutPage = async (req, res) => {
   let { user_id } = req.user;
