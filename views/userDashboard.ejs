@@ -72,6 +72,87 @@
           flex: 0 0 100%;
         }
       }
+      #ishislider {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Each Slide */
+      #ishislider .item {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* Slide Images */
+      #ishislider .item img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+        border-radius: 12px;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      /* Hover Effect */
+      #ishislider .item:hover img {
+        transform: scale(1.03);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+      }
+
+      /* Owl Carousel Navigation Styling */
+      #ishislider .owl-nav button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.4);
+        border: none;
+        color: #fff;
+        padding: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      #ishislider .owl-nav button:hover {
+        background: rgba(0, 0, 0, 0.6);
+      }
+
+      #ishislider .owl-nav .owl-prev {
+        left: 10px;
+      }
+
+      #ishislider .owl-nav .owl-next {
+        right: 10px;
+      }
+
+      /* Dots Styling */
+      #ishislider .owl-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      #ishislider .owl-dots .owl-dot span {
+        width: 10px;
+        height: 10px;
+        background: #ccc;
+        display: block;
+        border-radius: 50%;
+        margin: 5px;
+        transition: background 0.3s ease;
+      }
+
+      #ishislider .owl-dots .owl-dot.active span {
+        background: #007bff;
+      }
     </style>
   </head>
 

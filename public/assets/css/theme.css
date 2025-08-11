@@ -4311,8 +4311,7 @@
 #ishicategory .image-container a {
   position: relative;
   overflow: hidden;
-  display: block;
-  border-radius: 50%;
+
 }
 #ishicategory .image-container a img {
   width: auto;
@@ -13779,54 +13778,7 @@ section.checkout-step .continue {
   }
 }
 
-.scroll-box-arrows {
-  display: none;
-}
-.scroll-box-arrows i {
-  position: absolute;
-  bottom: 5%;
-  height: 100px;
-  line-height: 100px;
-  cursor: pointer;
-}
-.scroll-box-arrows .left {
-  left: 0;
-}
-.scroll-box-arrows .right {
-  right: 0;
-}
 
-.mask {
-  padding: 0 15px;
-  padding-bottom: 10px;
-}
-.mask .owl-nav .owl-prev,
-.mask .owl-nav .owl-next {
-  left: -15px;
-  right: auto;
-  position: absolute;
-  top: 35%;
-  margin: 0;
-  width: 30px;
-  height: 30px;
-}
-.mask .owl-nav .owl-prev i,
-.mask .owl-nav .owl-next i {
-  font-size: 12px;
-}
-.mask .owl-nav .owl-prev i:before,
-.mask .owl-nav .owl-next i:before {
-  font-size: 12px;
-  line-height: 28px;
-}
-.mask .owl-nav .owl-prev i:after,
-.mask .owl-nav .owl-next i:after {
-  display: none;
-}
-.mask .owl-nav .owl-next {
-  right: -15px;
-  left: auto;
-}
 
 #product-availability {
   display: flex;
