@@ -49,7 +49,7 @@ function userAuthorization_HTTP_Request(req, res, next) {
   }
 
   try {
-    const secret = process.env.JWT_SECRET;
+    const secret = "xyz@900";
     req.user = jwt.verify(accessToken, secret);
     req.loggedIn = true;
   } catch (error) {

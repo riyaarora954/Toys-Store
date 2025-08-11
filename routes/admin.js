@@ -52,7 +52,7 @@ function adminAuthorization(req, res, next) {
     if (!accessToken) {
       return res.redirect("/admin/login");
     }
-    let secret = process.env.JWT_SECRET;
+    let secret = "xyz@900";
     try {
       req.admin = jwt.verify(accessToken, secret);
       next();

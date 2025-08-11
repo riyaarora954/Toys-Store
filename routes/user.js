@@ -95,7 +95,7 @@ function userAuthorization(req, res, next) {
     if (!accessToken) {
       return res.redirect("/userSignUp");
     }
-    let secret = process.env.JWT_SECRET;
+    let secret = "xyz@900";
     try {
       req.user = jwt.verify(accessToken, secret);
       next();
@@ -112,7 +112,7 @@ function userAuthorization_HTTP_Request(req, res, next) {
     if (!accessToken) {
       return res.json({ loggedIn: false });
     }
-    let secret = process.env.JWT_SECRET;
+    let secret = "xyz@900";
     try {
       req.user = jwt.verify(accessToken, secret);
       next();
