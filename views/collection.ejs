@@ -101,60 +101,6 @@
                         </span>
                         <p id="totalproducts"></p>
                       </div>
-                      <div class="col-lg-6">
-                        <div class="row sort-by-row">
-                          <span
-                            class="col-sm-3 col-xs-12 col-md-3 hidden-lg-down sort-by"
-                            >Sort by:</span
-                          >
-                          <div
-                            class="col-sm-9 col-xs-12 col-md-9 products-sort-order dropdown"
-                          >
-                            <a
-                              class="select-title"
-                              rel="nofollow"
-                              data-toggle="dropdown"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                              >Relevance<i class="material-icons pull-xs-right"
-                                >&#xE5C5;</i
-                              ></a
-                            >
-                            <div class="dropdown-menu">
-                              <a
-                                rel="nofollow"
-                                href="#"
-                                class="select-list current js-search-link"
-                                >Relevance</a
-                              >
-                              <a
-                                rel="nofollow"
-                                href="#"
-                                class="select-list js-search-link"
-                                >Name, A to Z</a
-                              >
-                              <a
-                                rel="nofollow"
-                                href="#"
-                                class="select-list js-search-link"
-                                >Name, Z to A</a
-                              >
-                              <a
-                                rel="nofollow"
-                                href="#"
-                                class="select-list js-search-link"
-                                >Price, low to high</a
-                              >
-                              <a
-                                rel="nofollow"
-                                href="#"
-                                class="select-list js-search-link"
-                                >Price, high to low</a
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                   <div class="hidden-sm-down">
@@ -445,17 +391,16 @@
                                 width="250"
                               />
                             </a>
-                            <span class="outstock-overlay">SOLD OUT</span>
                             <div class="product-flags">
                               <div class="sale">Sale</div>
                             </div>
                           </div>
                           <div class="caption">
-                            <a href="/productPage/${x.product_id}">
+                            <a href="/productPage/₹{x.product_id}">
                             <p class="price">
-                              <span class="regular price-old">$${x.price}</span>
+                              <span class="regular price-old">₹${x.price}</span>
                               <span class="price-discount">${x.discount}%</span>
-                              <span class="price-sale">$${x.net_price}</span>
+                              <span class="price-sale">₹${x.net_price}</span>
                             </p>
 
                             <p class="description">
