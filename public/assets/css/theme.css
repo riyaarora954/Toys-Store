@@ -98,6 +98,7 @@
   position: relative;
 }
 .product-thumb .image img {
+  height: 250px;
   margin: 0 auto;
   max-width: 100%;
   -webkit-transition: all 0.7s ease 0s;
